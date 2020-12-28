@@ -1,0 +1,4 @@
+outs:
+- md5: 75e9e8a27c8be6d87140b7bfc11c2dfa
+  size: 74871703
+  path: segm.pth

@@ -1,0 +1,7 @@
+numba
+numpy
+Pillow
+PyYAML
+torchsummary
+matplotlib
+opencv-python
