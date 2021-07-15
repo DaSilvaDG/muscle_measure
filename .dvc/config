@@ -1,0 +1,4 @@
+[core]
+    remote = zip
+['remote "zip"']
+    url = ../zip_data/
