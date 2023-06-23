@@ -82,7 +82,9 @@ class Registrator:
             label_out = np.squeeze(label_out)
 
             labels = np.argmax(label_out, axis=0).astype(np.uint8)
-
+            # from matplotlib import pyplot as plt
+            # plt.imshow(labels)
+            # plt.show() 
             self.segmentations.append(labels)
         
         for k, (seg, img) in enumerate(zip(self.segmentations, self.images)):
@@ -275,7 +277,7 @@ def main():
 
     cv2.namedWindow('get_transform', cv2.WINDOW_NORMAL)
     # cv2.namedWindow('debug', cv2.WINDOW_NORMAL)
-    list_files = glob.glob('./MONTAGEM/**/*.tif*', recursive=True)
+    list_files = glob.glob('./MONTAGEM/**/croped_*.png', recursive=True)
     # list_files = glob.glob('/home/diegogomes/dev/deivid/MODELO MONTAGEM TESTE/TAKATA/VLD POS/IMAGEM CORTADA VLD/*.tif', recursive=True)
     # list_files = glob.glob('/home/diegogomes/dev/deivid/Baseline/João - Baseline/VLD/*.jpg', recursive=True)
 

@@ -4,4 +4,4 @@ Pillow
 PyYAML
 torchsummary
 matplotlib
-opencv-python
+opencv-python-headless

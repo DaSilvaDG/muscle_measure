@@ -6,3 +6,4 @@
 /imagens_para_recorte
 .ipynb_checkpoints/*
 zip_data/*
+src/__pycache__/vgg_unet.cpython-38.pyc

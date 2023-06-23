@@ -59,7 +59,7 @@ summary(model, input_size=(3, resolution[0], resolution[1]))
 
 model.eval()
 with torch.no_grad():
-    for file_ in list_files:
+    for k, file_ in enumerate(list_files):
 
         print(file_)
         img_np = cv2.imread(file_,
@@ -81,14 +81,18 @@ with torch.no_grad():
 
         labels = np.argmax(label_out, axis=0).astype(np.uint8)
         for i in range(nClasses):
-            contours, hierarchy = cv2.findContours((labels == i).astype('u1'), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)[-2:]
-            contour = sorted(contours, key=lambda x: cv2.contourArea(x), reverse = True)
-            if contour:
-                contour = contour[0]
-                if i != 0 and i != 1:
-                    epsilon = 0.01*cv2.arcLength(contour,True)
-                    approx = cv2.approxPolyDP(contour,epsilon,True) 
-                    cv2.drawContours(img_np, [approx], 0, viridis.colors[i,:3] * 255, 1)
+            mask = (np.dstack([(labels == i).astype('u1')] * 3) * viridis.colors[i,:3] * 255).astype('u1')
+            img_np_d = cv2.addWeighted(img_np.copy(), 1, mask, 0.5, 0)
+            cv2.imshow("Image", img_np_d)
+            cv2.waitKey(0)
+            # contours, hierarchy = cv2.findContours((labels == i).astype('u1'), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)[-2:]
+            # contour = sorted(contours, key=lambda x: cv2.contourArea(x), reverse = True)
+            # if contour:
+            #     contour = contour[0]
+            #     if i != 0 and i != 1:
+            #         epsilon = 0.01*cv2.arcLength(contour,True)
+            #         approx = cv2.approxPolyDP(contour,epsilon,True) 
+            #         cv2.drawContours(img_np, [approx], 0, viridis.colors[i,:3] * 255, 1)
 
         
 
@@ -97,8 +101,9 @@ with torch.no_grad():
         # for i in range(nClasses):
         #     img_np[labels == i] = img_np[labels == i] + viridis.colors[i,:3]*0.7
         # image_np = image_np * 255.
-        cv2.imshow("Image", img_np)
-        cv2.waitKey(0)
+        # cv2.imwrite(f"res_{k}_segm.png", img_np)
+        # cv2.imshow("Image", img_np)
+        # cv2.waitKey(0)
 
 
 
