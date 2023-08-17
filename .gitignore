@@ -7,3 +7,8 @@
 .ipynb_checkpoints/*
 zip_data/*
 src/__pycache__/vgg_unet.cpython-38.pyc
+muscle_measure.zip
+res_*_segm.png
+Validation.zip
+.gitignore
+zip_data.zip
