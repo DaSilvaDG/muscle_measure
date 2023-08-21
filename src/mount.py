@@ -11,9 +11,11 @@ from matplotlib import cm
 from matplotlib.colors import LinearSegmentedColormap, ListedColormap
 from numba import njit
 from scipy.optimize import differential_evolution
-
+import sys
+import tkinter as tk
+from tkinter import filedialog as fd 
 import vgg_unet
-
+import xdialog
 _DEBUG = 0
 
 transforms = []
@@ -139,7 +141,7 @@ class Registrator:
         for i in range(2, self.nbClasses):
             im1 = self.images[i1].copy()
 
-            im1[cv2.dilate((res1 != i).astype("u1"), kernel, iterations=1).astype(np.bool)] = 0
+            im1[cv2.dilate((res1 != i).astype("u1"), kernel, iterations=1).astype(bool)] = 0
             imgs1.append(im1)
 
         res2 = self.segmentations[i2]
@@ -147,7 +149,7 @@ class Registrator:
         imgs2 = []
         for i in range(2, self.nbClasses):
             im2 = self.images[i2].copy()
-            im2[cv2.dilate((res2 != i).astype("u1"), kernel, iterations=1).astype(np.bool)] = 0
+            im2[cv2.dilate((res2 != i).astype("u1"), kernel, iterations=1).astype(bool)] = 0
             imgs2.append(im2)
 
         M = np.float32([[1, 0, 0], [0, 1, shape[0] // 2]])
@@ -304,13 +306,13 @@ class Registrator:
         return img[np.ix_(mask.any(1), mask.any(0))]
 
 
-def main():
+def main(mout_dir):
     cv2.namedWindow("MountView", cv2.WINDOW_NORMAL)
 
     # cv2.namedWindow('debug', cv2.WINDOW_NORMAL)
     # list_files = glob.glob('./MONTAGEM/**/croped_*.png', recursive=True)
     list_files = glob.glob(
-        "/home/diegogomes/dev/muscle_area/muscle_measure/MONTAGEM/**/*.tif",
+        f"{mout_dir}/**/*.tif",
         recursive=True,
     )
     # list_files = glob.glob('/home/diegogomes/dev/deivid/Baseline/João - Baseline/VLD/*.jpg', recursive=True)
@@ -337,4 +339,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    dir_name = xdialog.directory("Title Here")
+    main(dir_name)

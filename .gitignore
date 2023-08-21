@@ -12,3 +12,7 @@ res_*_segm.png
 Validation.zip
 .gitignore
 zip_data.zip
+build/*
+dist/*
+*/__pycache__/*
+*.spec
