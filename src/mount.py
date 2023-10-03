@@ -16,6 +16,10 @@ import tkinter as tk
 from tkinter import filedialog as fd 
 import vgg_unet
 import xdialog
+from statistics import mode
+import crop
+
+
 _DEBUG = 0
 
 transforms = []
@@ -306,13 +310,15 @@ class Registrator:
         return img[np.ix_(mask.any(1), mask.any(0))]
 
 
-def main(mout_dir):
+def main(mout_dir, exts):
     cv2.namedWindow("MountView", cv2.WINDOW_NORMAL)
 
     # cv2.namedWindow('debug', cv2.WINDOW_NORMAL)
     # list_files = glob.glob('./MONTAGEM/**/croped_*.png', recursive=True)
+    crop.crop_images(f"{mout_dir}/**/*.{exts}")
+
     list_files = glob.glob(
-        f"{mout_dir}/**/*.tif",
+        f"{mout_dir}/**/*_cropped.png",
         recursive=True,
     )
     # list_files = glob.glob('/home/diegogomes/dev/deivid/Baseline/João - Baseline/VLD/*.jpg', recursive=True)
@@ -339,5 +345,7 @@ def main(mout_dir):
 
 
 if __name__ == "__main__":
-    dir_name = xdialog.directory("Title Here")
-    main(dir_name)
+    dir_name = xdialog.directory("Images to mount")
+    exts = mode([f.split(".")[-1] for f in glob.glob(f"{dir_name}/**/*", recursive=True)if "cropped" not in f and "seb" not in f])
+    
+    main(os.path.normpath(dir_name), exts)
