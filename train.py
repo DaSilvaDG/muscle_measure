@@ -458,9 +458,6 @@ def train(
     best_val_ = -1
     best_epoch = 0
 
-    # lossA = Focal_Loss().to(device)
-    # lossA.requres_grad = True
-    # lossB = torch.nn.NLLLoss().to(device)
     # Start training...
     for epoch in range(max_epochs):
         print("Epoch %d starting..." % (epoch + 1))
@@ -485,41 +482,13 @@ def train(
                 output, gt.to(device)
             )
 
-            # loss2 = lossB(F.log_softmax(output, dim=1), gt.to(device))
-            # total_loss = loss1 + loss2
+
             total_loss.backward()
             optimizer.step()
 
             mean_loss += total_loss.cpu().detach().numpy()
         print(f"Traning Loss: {mean_loss.item()}")
-        #     # Measure accuracy
 
-        #     gt = gt.cpu().numpy()
-
-        #     label_out = torch.nn.functional.softmax(output, dim=1)
-        #     label_out = label_out.cpu().detach().numpy()
-
-        #     labels = np.argmax(label_out, axis=1)
-            
-        #     all_preds.append(labels)
-        #     all_gts.append(gt)
-
-        # all_preds = np.stack(all_preds).reshape(-1)
-        # all_gts = np.stack(all_gts).reshape(-1)
-
-        # # {"sup": 1, "femur": 2, "inf": 3, "skin": 4, "Background": 0}
-
-        
-        # report = classification_report(
-        #         all_gts,
-        #         all_preds,
-        #         labels=[0, 1, 2, 3, 4],
-        #         target_names=["Background", "sup", "femur", "inf", "skin"],
-        #         output_dict=True
-        #     )
-        # total_score = report["weighted avg"]["f1-score"] * report["weighted avg"]["precision"]
-        # print(f"\n\nTraining Total Score: {total_score}")
-        # print(report["weighted avg"])
         if epoch % 5 != 0:
             continue
         all_preds = []

@@ -501,7 +501,6 @@ def validate(
             cv2.waitKey(300)
         all_preds = np.stack(all_preds).reshape(-1)
         all_gts = np.stack(all_gts).reshape(-1)
-
         from sklearn.metrics import classification_report
         # {"sup": 1, "femur": 2, "inf": 3, "skin": 4, "Background": 0}
 
@@ -529,8 +528,8 @@ def main():
     # Weight of each class
     batch_size_train = 8
 
-    path_data = "./muscle_measure/Validation"
-    #path_data = "/home/diegogomes/Downloads/Training"
+    path_data = "./Validation"
+
     dataset = CSA(path_data, is_train=False)
     val_loader = DataLoader(
         dataset,
