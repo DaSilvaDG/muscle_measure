@@ -28,3 +28,5 @@ $ dvc pull
 the way you want to run Joinup.
 
 #
+
+pyinstaller.exe -F --add-binary  ".\segm.pth;.\segm.pth"  .\src\mount.py

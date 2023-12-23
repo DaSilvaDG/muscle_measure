@@ -53,6 +53,15 @@ def call_back_ext(x, convergence, t_index):
     print(t_index, convergence, x)
     transforms[t_index] = transforms[t_index]*0.7  + x*0.3
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 class Registrator:
     def __init__(self):
@@ -61,7 +70,7 @@ class Registrator:
 
         self.device = torch.device("cpu" if torch.cuda.is_available() else "cpu")
 
-        self.model_name = "segm.pth"
+        self.model_name = resource_path("segm.pth")
 
         self.mean = [0.485, 0.456, 0.406]
         self.std = [0.229, 0.224, 0.225]
@@ -346,6 +355,6 @@ def main(mout_dir, exts):
 
 if __name__ == "__main__":
     dir_name = xdialog.directory("Images to mount")
-    exts = mode([f.split(".")[-1] for f in glob.glob(f"{dir_name}/**/*", recursive=True)if "cropped" not in f and "seb" not in f])
+    exts = mode([f.split(".")[-1] for f in glob.glob(f"{dir_name}/**/*", recursive=True)if "cropped" not in f and "seg" not in f and "mount" not in f])
     
     main(os.path.normpath(dir_name), exts)
