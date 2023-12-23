@@ -16,3 +16,5 @@ build/*
 dist/*
 */__pycache__/*
 *.spec
+/TRAIN
+/vgg16_model.pth

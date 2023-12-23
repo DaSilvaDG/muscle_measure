@@ -1,0 +1,4 @@
+outs:
+- md5: da992fa07488d4ada283fdd59a902e8e
+  size: 74877601
+  path: vgg16_model.pth
