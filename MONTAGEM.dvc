@@ -1,5 +1,6 @@
 outs:
-- md5: 3c0df14d6d2b452c6f3931d1886db013.dir
-  size: 6301584
-  nfiles: 16
+- md5: 40e533fccb451d14d8641d70072bd251.dir
+  size: 73786804
+  nfiles: 84
   path: MONTAGEM
+  hash: md5
